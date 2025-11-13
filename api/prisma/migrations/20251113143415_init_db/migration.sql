@@ -1,0 +1,13 @@
+-- CreateTable
+CREATE TABLE "Metric" (
+    "id" SERIAL NOT NULL,
+    "symbol" TEXT NOT NULL,
+    "source" TEXT NOT NULL DEFAULT 'CoinGecko',
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "priceUSD" DOUBLE PRECISION NOT NULL,
+    "marketCapUSD" DOUBLE PRECISION NOT NULL,
+    "volume24hUSD" DOUBLE PRECISION NOT NULL,
+    "deaiScore" DOUBLE PRECISION NOT NULL,
+
+    CONSTRAINT "Metric_pkey" PRIMARY KEY ("id")
+);

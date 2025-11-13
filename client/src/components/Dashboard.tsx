@@ -150,7 +150,8 @@ const Dashboard: React.FC = () => {
 
   // NOTE: Порт 3000 используется по умолчанию в NestJS.
   // Убедитесь, что ваш NestJS сервер запущен и настроен CORS!
-  const API_URL = 'http://localhost:3000/metrics';
+  // const API_URL = 'http://localhost:3000/metrics';
+  const API_URL = 'https://crypto-dashboard-app-gtg9.onrender.com/metrics';
 
   // ----------------------------------------------------------------
   // ФУНКЦИЯ ЗАГРУЗКИ ДАННЫХ
