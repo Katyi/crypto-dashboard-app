@@ -1,0 +1,26 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Модель для хранения исторических данных и рассчитанного DeAI Score
+model Metric {
+  id Int @id @default(autoincrement())
+
+  // Метаданные
+  symbol    String // ETH, BTC и т
+  source    String   @default("CoinGecko")
+  createdAt DateTime @default(now())
+
+  // Сырые данные (для отслеживания трендов)
+  priceUSD     Float
+  marketCapUSD Float
+  volume24hUSD Float
+
+  // Рассчитанная метрика (Ваша уникальная логика)
+  deaiScore Float // Ваш DeAI Score
+}
