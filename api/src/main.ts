@@ -17,10 +17,24 @@ async function bootstrap() {
 
   const port = process.env.PORT || 3000;
 
-  // Это гарантирует, что при завершении работы NestJS (например, на Render),
-  // соединение с базой данных будет закрыто корректно.
   const prismaService = app.get(PrismaService);
-  await prismaService.enableShutdownHooks(app);
+
+  const shutdown = async (signal: string) => {
+    logger.log(`Received ${signal}. Starting graceful shutdown...`);
+    try {
+      // КЛЮЧЕВОЙ ШАГ: отключение Prisma
+      await prismaService.$disconnect();
+      await app.close();
+      logger.log('Graceful shutdown completed.');
+      process.exit(0);
+    } catch (error) {
+      logger.error('Shutdown failed:', error);
+      process.exit(1);
+    }
+  };
+
+  process.on('SIGTERM', () => shutdown('SIGTERM')); // Сигнал от Render
+  process.on('SIGINT', () => shutdown('SIGINT')); // Сигнал от Ctrl+C
 
   await app.listen(port);
 
